@@ -10,7 +10,11 @@ var canvas = d3.select("#vis")
                   .attr("height", height)
                   .style("background-color", "rgba(170, 193, 255, 0.56)")
 
-var data = d3.json('data.json').then(data => {
+var colorScale;
+var myData = [];
+d3.json('data.json').then(data => {
+  myData = data
+
   var times = data.map(d => d.time);
   const timesSet = new Set(times);
 
@@ -98,6 +102,10 @@ var data = d3.json('data.json').then(data => {
             .duration('200')
             .style("opacity", 0)
   }
+
+  colorScale = d3.scaleOrdinal()
+      .domain(data.map(d => d.color))
+      .range(["lightblue", "navy", "pink"])
 
   function createShape(d) {
     var shape;
@@ -213,7 +221,7 @@ var data = d3.json('data.json').then(data => {
         break;
     }
     shape.attr("class", "shape")
-    shape.attr("fill", d.color)
+    shape.attr("fill", colorScale(d.color))
     return shape.node()
   }
 
