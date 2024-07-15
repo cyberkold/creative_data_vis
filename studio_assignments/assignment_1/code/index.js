@@ -6,15 +6,14 @@ var rad = 1;
 
 var canvas = d3.select("#vis")
                 .append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .style("background-color", "rgba(170, 193, 255, 0.56)");
+                  .attr("width", width)
+                  .attr("height", height)
+                  .style("background-color", "rgba(170, 193, 255, 0.56)")
 
 var data = d3.json('data.json').then(data => {
   var times = data.map(d => d.time);
   const timesSet = new Set(times);
 
-  var tickSpacing = 100;
   var numberOfTicks = timesSet.size;
 
   const x = d3.scaleLinear()
@@ -29,7 +28,13 @@ var data = d3.json('data.json').then(data => {
 
   canvas.append("g")
           .attr("transform", `translate(50, ${height-40})`)
-          .call(xAxis);
+          .call(xAxis)
+        .append("text")
+          .attr("y", 6)
+          .attr("x", 1420)
+          .style("text-anchor", "end")
+          .attr("fill", "black")
+          .text("time")
 
   const y = d3.scaleLinear()
           .domain([0, 5])
@@ -40,7 +45,13 @@ var data = d3.json('data.json').then(data => {
 
   canvas.append("g")
           .attr("transform", "translate(32, 60)")
-          .call(yAxis);
+          .call(yAxis)
+        .append("text")
+          .attr("y",-12)
+          .attr("x", 22)
+          .style("text-anchor", "end")
+          .attr("fill", "black")
+          .text("noise level")
 
   var infoBox = canvas.append("rect")
           .attr("class", "box")
@@ -210,6 +221,15 @@ var data = d3.json('data.json').then(data => {
     .data(data)
     .enter()
     .append(d => createShape(d))
+  
+  canvas.append("text")
+    .attr("y", 34)
+    .attr("x", width/2-400)
+    .attr("fill", "black")
+    .style("font-family", "Courier New")
+    .style("font-weight", 700)
+    .style("opacity", 0.75)
+    .text("Appearence of the sky and feel of the place outside DR-byen")
 
   var legend = canvas.append("g")
     .attr("class", "legend")
