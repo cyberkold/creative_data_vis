@@ -1,0 +1,122 @@
+[
+  {
+    "name": "oliver",
+    "steps": 10,
+    "raindrops": 13
+  },
+  {
+    "name": "oliver",
+    "steps": 20,
+    "raindrops": 24
+  },
+  {
+    "name": "oliver",
+    "steps": 30,
+    "raindrops": 37
+  },
+  {
+    "name": "oliver",
+    "steps": 40,
+    "raindrops": 44
+  },
+  {
+    "name": "oliver",
+    "steps": 50,
+    "raindrops": 60
+  },
+  {
+    "name": "oliver",
+    "steps": 60,
+    "raindrops": 69
+  },
+  {
+    "name": "emil",
+    "steps": 10,
+    "raindrops": 62
+  },
+  {
+    "name": "emil",
+    "steps": 20,
+    "raindrops": 19
+  },
+  {
+    "name": "emil",
+    "steps": 30,
+    "raindrops": 30
+  },
+  {
+    "name": "emil",
+    "steps": 40,
+    "raindrops": 40
+  },
+  {
+    "name": "emil",
+    "steps": 50,
+    "raindrops": 52
+  },
+  {
+    "name": "emil",
+    "steps": 60,
+    "raindrops": 60
+  },
+  {
+    "name": "phi va",
+    "steps": 10,
+    "raindrops": 9
+  },
+  {
+    "name": "phi va",
+    "steps": 20,
+    "raindrops": 12
+  },
+  {
+    "name": "phi va",
+    "steps": 30,
+    "raindrops": 20
+  },
+  {
+    "name": "phi va",
+    "steps": 40,
+    "raindrops": 29
+  },
+  {
+    "name": "phi va",
+    "steps": 50,
+    "raindrops": 39
+  },
+  {
+    "name": "phi va",
+    "steps": 60,
+    "raindrops": 50
+  },
+  {
+    "name": "viggo",
+    "steps": 10,
+    "raindrops": 6
+  },
+  {
+    "name": "viggo",
+    "steps": 20,
+    "raindrops": 12
+  },
+  {
+    "name": "viggo",
+    "steps": 30,
+    "raindrops": 19
+  },
+  {
+    "name": "viggo",
+    "steps": 40,
+    "raindrops": 25
+  },
+  {
+    "name": "viggo",
+    "steps": 50,
+    "raindrops": 30
+  },
+  {
+    "name": "viggo",
+    "steps": 60,
+    "raindrops": 40
+  }
+]
