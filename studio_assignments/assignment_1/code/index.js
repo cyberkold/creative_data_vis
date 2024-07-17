@@ -10,7 +10,6 @@ var canvas = d3.select("#vis")
                   .attr("height", height)
                   .style("background-color", "rgba(170, 193, 255, 0.56)")
 
-var colorScale;
 var myData = [];
 d3.json('data.json').then(data => {
   myData = data
@@ -40,8 +39,10 @@ d3.json('data.json').then(data => {
           .attr("fill", "black")
           .text("time")
 
+  var soundMax = d3.max(data, d => d.sound)
+
   const y = d3.scaleLinear()
-          .domain([0, 5])
+          .domain([0, soundMax])
           .range([height-100, 0])
 
   const yAxis = d3.axisLeft(y)
@@ -70,7 +71,7 @@ d3.json('data.json').then(data => {
           .style("stroke", "black")
           .style("stroke-width", "0.55px")
           .style("opacity", 0)
-
+  
   var line1 = textBox.append("tspan")
   var line2 = textBox.append("tspan")
   var line3 = textBox.append("tspan")
@@ -103,7 +104,7 @@ d3.json('data.json').then(data => {
             .style("opacity", 0)
   }
 
-  colorScale = d3.scaleOrdinal()
+  var colorScale = d3.scaleOrdinal()
       .domain(data.map(d => d.color))
       .range(["lightblue", "navy", "pink"])
 
