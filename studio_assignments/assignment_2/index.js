@@ -43,7 +43,7 @@ function draw() {
       .join("g")
       .attr("transform", (d, i) => {
         let baseX = xScale(d.steps);
-        let spacing = 4; 
+        let spacing = 6; 
         let offset = i * spacing;
         return `translate(${baseX + offset}, ${(height - margin) / 2})`;
     });
@@ -75,6 +75,5 @@ function draw() {
       .attr("d", d => generateBend(d))
       .attr("stroke", "white")
       .attr("stroke-width", 8)
-
 
 }
