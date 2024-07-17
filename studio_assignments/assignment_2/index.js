@@ -43,9 +43,9 @@ function draw() {
       .join("g")
       .attr("transform", (d, i) => {
         let baseX = xScale(d.steps);
-      let spacing = 8; 
-      let offset = i * spacing-100;
-      return `translate(${baseX + offset}, ${(height - margin) / 2})`;
+        let spacing = 8; 
+        let offset = i * spacing-100;
+        return `translate(${baseX + offset}, ${(height - margin) / 2})`;
     });
     //bend levels for lines
     //make a new json cat with bend level based on raindrops felt,
