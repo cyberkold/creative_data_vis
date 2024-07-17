@@ -41,15 +41,23 @@ function draw() {
     var lines = svg.selectAll(".linesGroup")
       .data(data)
       .join("g")
-      .attr("transform", d =>
-        `translate(${xScale(d.steps)}, ${(height - margin) / 2})`
+      .attr("transform", (d, i) =>
+        `translate(${xScale(d.steps)+((i+4)*10)}, ${(height - margin) / 2})`
       )
+    //bend levels for lines
+    //make a new json cat with bend level based on raindrops felt,
+    //predefine the different bends for the lines
 
-    lines.append("line")
-      .attr("x1", 0)
-      .attr("y1", -100)
-      .attr("x2", 0)
-      .attr("y2", 54)
+    //bendlevels
+    var lvl1 = "M0,-100 C0,-100 0,54 0,54"
+    var lvl2 = "M0,-100 C30,-28 0,54 0,54"
+    var lvl3 = "M0,-100 C0,-100 0,54 0,54"
+    var lvl4 = "M0,-60 C130,-28 0,54 0,32"
+    var lvl5 = ""
+
+    lines.append("path")
+      .attr("d", "M0,0 L50,50 L100,0")
       .attr("stroke", "white")
+
 
 }
