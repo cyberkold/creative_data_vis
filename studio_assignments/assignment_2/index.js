@@ -43,13 +43,10 @@ function draw() {
       .join("g")
       .attr("transform", (d, i) => {
         let baseX = xScale(d.steps);
-        let spacing = 8; 
-        let offset = i * spacing-100;
+        let spacing = 4; 
+        let offset = i * spacing;
         return `translate(${baseX + offset}, ${(height - margin) / 2})`;
     });
-    //bend levels for lines
-    //make a new json cat with bend level based on raindrops felt,
-    //predefine the different bends for the lines
 
     //bend-levels
     var lvl1 = "M0,-100 C0,-100 0,54 0,54"
@@ -58,10 +55,24 @@ function draw() {
     var lvl4 = "M0,-60 C130,-28 0,54 0,32"
     var lvl5 = "M200,0 L150,-50 M200,0 L150,50"
 
-    //make 
+    //function which determines bend level 
+    function generateBend(d) {
+      switch(true) {
+        case (d.raindrops <= 10):
+          return lvl1;
+        case (d.raindrops <= 20):
+          return lvl2;
+        case (d.raindrops <= 35):
+          return lvl3;
+        case (d.raindrops <= 50):
+          return lvl4;
+        case (d.raindrops > 50):
+          return lvl5;
+      }
+    }
 
     lines.append("path")
-      .attr("d", "M200,0 L150,-50 M200,0 L150,50")
+      .attr("d", d => generateBend(d))
       .attr("stroke", "white")
       .attr("stroke-width", 8)
 
