@@ -19,10 +19,12 @@ function draw() {
   var min = d3.min(data.map(d => d.steps));
   var max = d3.max(data.map(d => d.steps));
 
+  var tickValues = d3.range(min, max+1, 10)
   var xScale = d3.scaleLinear()
     .domain([min, max])
-    .range([margin, width-margin])
+    .range([margin, width-margin]);
   var xAxis = d3.axisBottom(xScale)
+    .tickValues(tickValues);
 
   var axis = svg.append("g")
     .attr("transform", `translate(0, ${height-margin})`)
@@ -35,19 +37,19 @@ function draw() {
     .style("fill", "white");
 
     //lines
-    var lines = svg.selectAll("g")
+    var linesGroup = svg.append("g").attr("class", "linesGroup")
+    var lines = svg.selectAll(".linesGroup")
       .data(data)
       .join("g")
       .attr("transform", d =>
-        //"translate("+xScale(d.raindrops+","+(height-margin)/2+")")
-        `translate(${xScale(d.raindrops)}, ${(height - margin) / 2})`
+        `translate(${xScale(d.steps)}, ${(height - margin) / 2})`
       )
 
     lines.append("line")
       .attr("x1", 0)
-      .attr("y1", 0)
+      .attr("y1", -100)
       .attr("x2", 0)
-      .attr("y2", 24)
+      .attr("y2", 54)
       .attr("stroke", "white")
 
 }
