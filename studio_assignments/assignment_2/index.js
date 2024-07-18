@@ -35,7 +35,7 @@ function draw() {
     .attr("class", "axis");
 
   axis.selectAll("path, line")
-    .style("stroke", "white");
+    .style("stroke", "white")
   axis.selectAll("text")
     .style("fill", "white");
 
@@ -46,10 +46,11 @@ function draw() {
       .join("g")
       .attr("transform", (d, i) => {
         let baseX = xScale(d.steps);
-        let spacing = 6; 
+        let spacing = 8; 
         let offset = i * spacing;
         return `translate(${baseX + offset}, ${(height - margin) / 2})`;
-    });
+        })
+      //.attr("fill", d => colorScale(d.name));
 
     //bend-levels
     var lvl1 = "M0,-100 C0,-100 0,54 0,54"
@@ -74,10 +75,48 @@ function draw() {
       }
     }
 
+    //infobox for when hovering on lines
+    var infobox = svg.append("g")
+      .attr("class", "hoverbox")
+      .style("opacity", 0);
+
+    infobox.append("rect")
+      .attr("class", "infoRect")
+      .attr("width", 100)
+      .attr("height", 40)
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("fill", "white")
+      .style("opacity", 0.15);
+
+    var infoText = infobox.append("text")
+      .attr("x", 15)
+      .attr("y", 24)
+      .style("font-size", 12)
+      .style("fill", "white")
+      .style("stroke", "white")
+      .style("stroke-width", "0.55px");
+
     lines.append("path")
       .attr("d", d => generateBend(d))
-      .attr("stroke", "white")
+      .attr("stroke", d => colorScale(d.name))
       .attr("stroke-width", 8)
+      .on("mouseover", function(event, d) {
+      //line hover effect
+      d3.selectAll("path").style("opacity", 0.2);
+      d3.select(this).style("opacity", 1);
+      //infobox hover effect
+      infobox.transition()
+        .duration(100)
+        .style("opacity", 1)
+        .attr("transform", `translate(${event.pageX},${event.pageY - 50})`);
+      infoText.text(`Raindrops: ${d.raindrops}`)
+        .style("opacity", 1);
+      })
+      .on("mouseout", function(d, i) {
+        d3.selectAll("path").transition().duration(400).style("opacity", 1)
+        infobox.transition().duration(200).style("opacity", 0);
+      })
 
     //legend
     var legendWidth = 160;
@@ -87,7 +126,6 @@ function draw() {
       .attr("class", "legend")
       .attr("width", legendWidth)
       .attr("height", legendHeight)
-      .attr("fill", "white")
       .attr("x", width-180)
       .attr("y", margin-14)
 
@@ -103,8 +141,6 @@ function draw() {
       .attr("x", 0)
       .attr("y", 0)
       .style("font-size", 12)
-      .style("fill", "black")
-      .style("stroke", "black")
       .style("stroke-width", "0.55px")
     
     var names = data.map(d => d.name);
