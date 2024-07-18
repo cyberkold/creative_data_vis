@@ -76,4 +76,23 @@ function draw() {
       .attr("stroke", "white")
       .attr("stroke-width", 8)
 
+    //legend
+    var legendWidth = 160;
+    var legendHeight = 210;
+
+    var legendSvg = svg.append("svg")
+      .attr("class", "legend")
+      .attr("width", legendWidth)
+      .attr("height", legendHeight)
+      .attr("fill", "white")
+      .attr("x", width-180)
+      .attr("y", margin-14)
+
+    legendSvg.append("rect")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("width", legendWidth)
+      .attr("height", legendHeight)
+      .attr("fill", "white")
+      .style("opacity", 0.8)
 }
