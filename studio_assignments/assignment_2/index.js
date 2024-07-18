@@ -18,6 +18,9 @@ function draw() {
   // axis
   var min = d3.min(data.map(d => d.steps));
   var max = d3.max(data.map(d => d.steps));
+  var colorScale = d3.scaleOrdinal()
+      .domain(data.map(d => d.name))
+      .range(d3.schemeSet3)
 
   var tickValues = d3.range(min, max+1, 10)
   var xScale = d3.scaleLinear()
@@ -78,7 +81,7 @@ function draw() {
 
     //legend
     var legendWidth = 160;
-    var legendHeight = 210;
+    var legendHeight = 96;
 
     var legendSvg = svg.append("svg")
       .attr("class", "legend")
@@ -94,5 +97,27 @@ function draw() {
       .attr("width", legendWidth)
       .attr("height", legendHeight)
       .attr("fill", "white")
-      .style("opacity", 0.8)
+      .style("opacity", 0.15)
+
+    var legendText = legendSvg.append("text")
+      .attr("x", 0)
+      .attr("y", 0)
+      .style("font-size", 12)
+      .style("fill", "black")
+      .style("stroke", "black")
+      .style("stroke-width", "0.55px")
+    
+    var names = data.map(d => d.name);
+    var uniqueNames = new Set(names);
+    var spacingText = 20;
+
+    legendSvg.selectAll("text.legendText")
+      .data([...uniqueNames])
+      .enter()
+      .append("text")
+      .attr("x", 58)
+      .attr("y", (d, i) => {return (i * spacingText)+20;})
+      .style("fill", d => colorScale(d))
+      .text(d => d)
+    
 }
