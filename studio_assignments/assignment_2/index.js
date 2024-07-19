@@ -50,7 +50,7 @@ function draw() {
         let offset = i * spacing;
         return `translate(${baseX + offset}, ${(height - margin) / 2})`;
         })
-      //.attr("fill", d => colorScale(d.name));
+      .attr("class", "linesDrops")
 
     //bend-levels
     var lvl1 = "M0,-100 C0,-100 0,54 0,54"
@@ -58,6 +58,8 @@ function draw() {
     var lvl3 = "M0,-100 C0,-100 0,54 0,54"
     var lvl4 = "M0,-60 C130,-28 0,54 0,32"
     var lvl5 = "M200,0 L150,-50 M200,0 L150,50"
+
+    var bendLvls = [lvl1, lvl2, lvl3, lvl4, lvl5];
 
     //function which determines bend level 
     function generateBend(d) {
@@ -103,7 +105,7 @@ function draw() {
       .attr("stroke-width", 8)
       .on("mouseover", function(event, d) {
       //line hover effect
-      d3.selectAll("path").style("opacity", 0.2);
+      d3.selectAll(".linesDrops path").style("opacity", 0.2);
       d3.select(this).style("opacity", 1);
       //infobox hover effect
       infobox.transition()
@@ -114,11 +116,11 @@ function draw() {
         .style("opacity", 1);
       })
       .on("mouseout", function(d, i) {
-        d3.selectAll("path").transition().duration(400).style("opacity", 1)
+        d3.selectAll(".linesDrops path").transition().duration(400).style("opacity", 1)
         infobox.transition().duration(200).style("opacity", 0);
       })
 
-    //legend
+    //legend for names
     var legendWidth = 160;
     var legendHeight = 96;
 
@@ -155,5 +157,51 @@ function draw() {
       .attr("y", (d, i) => {return (i * spacingText)+20;})
       .style("fill", d => colorScale(d))
       .text(d => d)
+  
+  //legend for bend levels
+  var legendBendWidth = 320;
+  var legendBendHeight = 80;
+
+  var legendBendSvg = svg.append("svg")
+      .attr("class", "legend")
+      .attr("width", legendBendWidth)
+      .attr("height", legendBendHeight)
+      .attr("x", width/2+192)
+      .attr("y", margin-14)
+
+  legendBendSvg.append("rect")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("width", legendBendWidth)
+      .attr("height", legendBendHeight)
+      .attr("fill", "white")
+      .style("opacity", 0.15)
+
+  var legendBendText = legendSvg.append("text")
+      .attr("x", 0)
+      .attr("y", 0)
+      .style("font-size", 12)
+      .style("stroke-width", "0.55px")
+
+  legendBendSvg.selectAll("text.legendBendText")
+      .data(["lvl 1", "lvl 2", "lvl 3", "lvl 4", "lvl 5"])
+      .enter()
+      .append("text")
+      .attr("x", (d, i) => {return (i*60)+26})
+      .attr("y", 70)
+      .style("fill", "white")
+      .text(d => d)
+
+  var scale = 0.2;
+
+  legendBendSvg.selectAll("path.bendLevelPath")
+      .data(bendLvls)
+      .enter()
+      .append("path")
+      .attr("d", d => d)
+      .attr("fill", "none")
+      .attr("stroke", "white")
+      .attr("stroke-width", 6)
+      .attr("transform", (d, i) => `scale(${scale}) translate(${(i*276)+200}, 140)`);
     
 }
