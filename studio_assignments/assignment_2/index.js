@@ -116,7 +116,7 @@ function draw() {
         .style("opacity", 1);
       })
       .on("mouseout", function(d, i) {
-        d3.selectAll(".linesDrops path").transition().duration(400).style("opacity", 1)
+        d3.selectAll(".linesDrops path").transition().duration(200).style("opacity", 1)
         infobox.transition().duration(200).style("opacity", 0);
       })
 
