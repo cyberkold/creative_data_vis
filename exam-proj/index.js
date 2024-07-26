@@ -34,6 +34,18 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
       totals1980[row.Country] = +row.Total;
     }
   });
+
+  var toolTip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0)
+    .style("position", "absolute")
+    .style("background-color", "white")
+    .style("border", "1px solid black")
+    .style("padding", "5px")
+    .style("height", "20px")
+    .style("width", "120px")
+    .style("text-align", "center")
+
   //draw the map
   var countryPaths = svg.append("g")
     .selectAll("path")
@@ -43,16 +55,30 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
        .attr("fill", function(d) {
         var country = d.properties.name;
         var value = totals1980[country];
-        return value ? color(value) : "black";
+        var fillColor = value ? color(value) : "black";
+        d.originalFill = fillColor;
+        return fillColor;
        })
        .style("stroke", "#fff")
-       .on("mouseover", function(d) {
-          var thisData = d.target.__data__
-          //console.log(thisData)
-
+       .on("mouseover", function(event, d) {
           d3.select(this)
-          .transition()
-          .attr("fill", "grey")
+            .transition()
+            .style("cursor", "pointer")
+            .attr("fill", "grey")
+          toolTip.transition()
+            .duration(100)
+            .style("opacity", 0.9)
+          toolTip.html(`${d.properties.name}`)
+            .style("left", (event.pageX+5) + "px")
+            .style("top", (event.pageY-28) + "px")
+        })
+        .on("mouseout", function(d) {
+          var thisData = d.target.__data__
+          d3.select(this)
+            .transition()
+            .attr("fill", thisData.originalFill)
+          toolTip.transition()
+            .style("opacity", 0)
         })
         
 
@@ -74,7 +100,9 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
       countryPaths.attr("fill", function(d) {
         var country = d.properties.name;
         var value = totals[country]; //get value for the country (number of disasters for that country that specific year)
-        return value ? color(value) : "black";
+        var fillColor = value ? color(value) : "black";
+        d.originalFill = fillColor;
+        return fillColor;
       });  
     });
   })
