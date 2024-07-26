@@ -46,6 +46,34 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("width", "120px")
     .style("text-align", "center")
 
+  var popUp = d3.select("body").append("div")
+    .attr("class", "popUp")
+    .style("opacity", 0)
+    .style("position", "absolute")
+    .style("background-color", "white")
+    .style("border", "1px solid black")
+    .style("padding", "5px")
+    .style("text-align", "center")
+
+  var closeButton = d3.select(".popUp").append("button")
+    .style("position", "absolute")
+    .style("top", "3%")
+    .style("left", "95%")
+    .style("width", "12px")
+    .style("height", "12px")
+    .text("X")
+    .style("text-align", "center")
+    .style("padding", "0")
+    .style("overflow", "hidden")
+    .style("font-size", "8px")
+    .style("cursor", "pointer")
+    .on("click", function() {
+      d3.select(".popUp")
+        .style("opacity", 0)
+        .style("width", "0px")
+        .style("height", "0px")
+    })
+
   //draw the map
   var countryPaths = svg.append("g")
     .selectAll("path")
@@ -79,6 +107,16 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
             .attr("fill", thisData.originalFill)
           toolTip.transition()
             .style("opacity", 0)
+        })
+        .on("click", function(d) {
+          popUp.transition()
+            .duration(100)
+            .style("opacity", 0.9)
+            .style("display", "block")
+            .style("left", "31%")
+            .style("top", "22%")
+            .style("height", "500px")
+            .style("width", "600px");
         })
         
 
