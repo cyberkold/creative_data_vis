@@ -55,6 +55,9 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("padding", "5px")
     .style("text-align", "center")
 
+  var popUpContent = popUp.append("div")
+    .attr("class", "popUp-content");
+
   var closeButton = d3.select(".popUp").append("button")
     .style("position", "absolute")
     .style("top", "3%")
@@ -109,6 +112,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
             .style("opacity", 0)
         })
         .on("click", function(d) {
+          var thisData = d.target.__data__
           popUp.transition()
             .duration(100)
             .style("opacity", 0.9)
@@ -116,7 +120,8 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
             .style("left", "31%")
             .style("top", "22%")
             .style("height", "500px")
-            .style("width", "600px");
+            .style("width", "600px")
+          popUpContent.html(thisData.properties.name)
         })
         
 
