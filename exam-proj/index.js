@@ -55,8 +55,12 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("padding", "5px")
     .style("text-align", "center")
 
+  var popUpTitle = popUp.append("div")
+    .attr("class", "popUp-content")
+    .style("font-size", "24px")
+
   var popUpContent = popUp.append("div")
-    .attr("class", "popUp-content");
+    .style("font-size", "12px")
 
   var closeButton = d3.select(".popUp").append("button")
     .style("position", "absolute")
@@ -120,9 +124,25 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
             .style("left", "31%")
             .style("top", "22%")
             .style("height", "500px")
-            .style("width", "600px")
-          popUpContent.html(thisData.properties.name)
+            .style("width", "800px")
+          popUpTitle.html(thisData.properties.name)
+          var temperature = getDisValues(thisData.properties.name, 'Extreme temperature')
+          var drought = getDisValues(thisData.properties.name, 'Drought')
+          var flood = getDisValues(thisData.properties.name, 'Flood')
+          var storm = getDisValues(thisData.properties.name, 'Storm')
+          var landslide = getDisValues(thisData.properties.name, 'Landslide')
+          var wildfire = getDisValues(thisData.properties.name, 'Wildfire')
+          popUpContent.html(`In ${document.getElementById("slider").value}, ${thisData.properties.name} had ${temperature} cases of extreme temperatures, ${storm} cases of storms, ${flood} cases of floods, ${drought} cases of drought, ${wildfire} cases of wildfires and ${landslide} cases of landslides`)
         })
+
+    function getDisValues(country, value) {
+      var filteredData = disasterData.filter(function(row) {
+        return row.Country === country && row.Year === (document.getElementById("slider").value);
+      }).map(function(row) {
+        return Math.floor(row[value]);
+      })
+        return filteredData.length > 0 ? filteredData[0] : 0;
+      }
         
 
   //event listener for slider
