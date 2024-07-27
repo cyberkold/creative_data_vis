@@ -13,6 +13,16 @@ var svg = d3.select("#vis")
   .style("margin", "auto")
   .style("background-color", "black")
 
+//viz title
+var vizTitle = svg.append("text")
+  .attr("y", 60)
+  .attr("x", width/2-360)
+  .style("display", "block")
+  .style("margin", "auto")
+  .attr("fill", "white")
+  .style("font-size", "34px")
+  .text("Nature’s Fury: 43 Years of Global Disasters (1980-2023)")
+
 //map
 var projection = d3.geoNaturalEarth1()
   .scale(width/4.8)
@@ -135,11 +145,12 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
           popUpContent.html(`In ${document.getElementById("slider").value}, ${thisData.properties.name} had ${temperature} cases of extreme temperatures, ${storm} cases of storms, ${flood} cases of floods, ${drought} cases of drought, ${wildfire} cases of wildfires and ${landslide} cases of landslides`)
         })
 
-    function getDisValues(country, value) {
+    //function to get column for specific country and year, and retrieve the value
+    function getDisValues(country, column) {
       var filteredData = disasterData.filter(function(row) {
         return row.Country === country && row.Year === (document.getElementById("slider").value);
       }).map(function(row) {
-        return Math.floor(row[value]);
+        return Math.floor(row[column]);
       })
         return filteredData.length > 0 ? filteredData[0] : 0;
       }
@@ -186,11 +197,14 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("font-size", "24px")
     .style("color", "white")
     .style("position", "absolute")
+    .style("top", height-90+"px")
     .style("left", `calc(50% - ${sliderTextWidth / 2}px)`);
 
   d3.select("#slider")
-    .style("display", "block")
-    .style("margin", "0 auto")
+    .style("position", "absolute")
+    .style("top", height-20+"px")
+    .style("left", width/2-140+"px")
+    .style("z-index", "10")
     .attr("min", minYear)
     .attr("max", maxYear)
     .attr("step", "1")
