@@ -151,7 +151,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
           popUpGraph.transition()
             .attr("height", 800)
             .attr("width", 800)
-            .attr("transform", "translate(50,60)");
+            .attr("transform", "translate(50,30)");
 
           var disCountryValues;
           try {
@@ -241,7 +241,9 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
               })
 
           popUpTitle.html(thisData.properties.name)
-          popUpContent.html(document.getElementById("slider").value)
+          popUpContent.html(`${document.getElementById("slider").value} <br> Lorem ipsum odor amet, consectetuer adipiscing, elit. Diam imperdiet ornare egestas a congue.
+          Lorem ipsum odor amet, consectetuer adipiscing, elit. Diam imperdiet ornare egestas a congue. Lorem ipsum odor amet, consectetuer adipiscing, elit. Diam imperdiet 
+          ornare egestas a congue. Lorem ipsum odor amet, consectetuer adipiscing, elit. Diam imperdiet ornare egestas a congue.`)
           
         })
 
