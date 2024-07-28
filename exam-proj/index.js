@@ -68,11 +68,12 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
 
   var popUpTitle = popUp.append("div")
     .attr("class", "popUp-content")
-    .style("font-size", "24px")
+    .style("font-size", "26px")
     .style("text-align", "center")
 
-  /*var popUpContent = popUp.append("div")
-    .style("font-size", "12px")*/
+  var popUpContent = popUp.append("div")
+    .style("font-size", "14px")
+    .style("text-align", "center")
 
   var popUpGraph = d3.select(".popUp")
     .append("svg")
@@ -81,7 +82,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
   var closeButton = d3.select(".popUp").append("button")
     .style("position", "absolute")
     .style("top", "3%")
-    .style("left", "95%")
+    .style("left", "97%")
     .style("width", "12px")
     .style("height", "12px")
     .text("X")
@@ -147,9 +148,9 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
             .style("height", popUpHeight)
             .style("width", popUpWidth)
           popUpGraph.transition()
-            .attr("height", 400)
+            .attr("height", 800)
             .attr("width", 800)
-            .attr("transform", "translate(50,140)");
+            .attr("transform", "translate(50,60)");
 
           var disCountryValues;
           try {
@@ -185,47 +186,54 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
             .rangeRound([margin.left, 800 - margin.right])
             .padding(0.1);
 
-          var xAxis = d3.axisBottom(xScale);
-
-          popUpGraph.append("g")
-            .attr("transform", `translate(10,${400 - margin.bottom})`)
-            .call(xAxis)
-            .selectAll("text")  
-              .style("text-anchor", "middle")
-              .attr("dx", "-.8em")
-              .attr("dy", ".90em")
 
           var y = d3.scaleLinear()
-            .domain([0, maxValue])
-            .range([400 - margin.bottom, margin.top])
+            .domain([0, 27])
+            .range([510 - margin.bottom, margin.top])
+
+          popUpGraph.selectAll("*").remove();
 
           var yAxis = d3.axisLeft(y)
-            .ticks(5)
+            .ticks(30)
+          
+          var xAxis = d3.axisBottom(xScale);
 
           popUpGraph.append("g")
             .attr("transform", `translate(${margin.left},-10)`)
             .call(yAxis)
 
+          popUpGraph.append("g")
+            .attr("transform", `translate(10,${500 - margin.bottom})`)
+            .call(xAxis)
+            .selectAll("text")  
+              .style("text-anchor", "middle")
+              .attr("dx", "-.8em")
+              .attr("dy", ".90em")
           
-              
-
+          popUpGraph.selectAll("rect")
+            .data(disCountryValues)
+            .enter()
+            .append("rect")
+              .attr("x", d => xScale(d.type)+xScale.bandwidth() / 2 - 20)
+              .attr("y", d => y(d.value))
+              .attr("width", xScale.bandwidth()-50)
+              .attr("height", d => 500 - margin.bottom - y(d.value))
+              .attr("fill", "black"); // You can choose any fill color
 
           popUpTitle.html(thisData.properties.name)
+          popUpContent.html(document.getElementById("slider").value)
           
-
-          /*
-          popUpContent.html(`<br><br><br><u><strong style="font-size: 16px;">In${document.getElementById("slider").value}, ${thisData.properties.name} had</strong></u> <strong><br>Extreme temperatures:</strong> ${temperature}<br><strong>Storms:</strong> ${storm}<br><strong>Floods:</strong> ${flood}<br><strong>Drought:</strong> ${drought}<br><strong>Wildfires:</strong> ${wildfire}<br><strong>Landslides:</strong> ${landslide}`)*/
         })
 
     //function to get column for specific country and year, and retrieve the value
-    function getDisValues(country, column) {
+    /*function getDisValues(country, column) {
       var filteredData = disasterData.filter(function(row) {
         return row.Country === country && row.Year === (document.getElementById("slider").value);
       }).map(function(row) {
         return Math.floor(row[column]);
       })
         return filteredData.length > 0 ? filteredData[0] : 0;
-      }
+      }*/
         
 
   //event listener for slider
