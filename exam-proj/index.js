@@ -124,6 +124,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
             .attr("fill", "grey")
           toolTip.transition()
             .duration(100)
+            .style("width", "120px")
             .style("opacity", 0.9)
           toolTip.html(`${d.properties.name}`)
             .style("left", (event.pageX+5) + "px")
@@ -227,8 +228,8 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
                 .duration(100)
                 .style("opacity", 0.9)
               toolTip.html(`${d.value}`)
-                .style("left", (xScale(d.type) + xScale.bandwidth() / 2 + 250) + "px") // Adjust +10 as needed
-                .style("top", (y(d.value) + 270) + "px")
+                .style("left", (xScale(d.type) + xScale.bandwidth() / 2 + 280) + "px") // Adjust +10 as needed
+                .style("top", (y(d.value) + 300) + "px")
                 .style("z-index", "20")
                 .style("width", "36px")
               })
@@ -308,5 +309,73 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .attr("max", maxYear)
     .attr("step", "1")
     .attr("value", "0")
+
+  var legend = svg.append("g")
+    .attr("class", "legend")
+
+  legend.append("rect")
+    .attr("x", 0)
+    .attr("y", 420)
+    .attr("height", 300)
+    .attr("width", 220)
+    .style("fill", "white")
+    .style("opacity", 0.1)
+
+  var defs = svg.append("defs")
+  var linearGradient = defs.append("linearGradient")
+      .attr("id", "linear-gradient")
+
+  linearGradient
+      .attr("x1", "0%")
+      .attr("y1", "80%")
+      .attr("x2", "100%")
+      .attr("y2", "80%")
+
+  linearGradient.append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "white")
+  linearGradient.append("stop")
+    .attr("offset", "100%")
+    .attr("stop-color", "brown")
+
+  legend.append("rect")
+    .attr("width", 200)
+    .attr("height", 20)
+    .attr("x", 10)
+    .attr("y", 440)
+    .style("fill", "url(#linear-gradient)")
+
+  legend.append("text")
+    .attr("x", 10)
+    .attr("y", 462)
+    .style("font-size", 10)
+    .style("font-style", "italic")
+    .style("fill", "white")
+    .selectAll("tspan")
+    .data(["The color of the countries denotes the number of", "natural disasters in total. If the country has a", 
+      "black color, it had 0 disasters in total that year."])
+    .enter()
+    .append("tspan")
+    .attr("x", 10)
+    .attr("dy", "12px")
+    .text(d => d);
+
+  legend.append("text")
+    .attr("x", 10)
+    .attr("y", 510)
+    .style("font-size", 10)
+    .style("fill", "white")
+    .selectAll("tspan")
+    .data(["Lorem ipsum odor amet, consectetuer adipiscing", "elit. Diam imperdiet ornare egestas a congue",
+      "congue curabitur sit. Risus laoreet nam quam", "ultricies quisque inceptos. Enim torquent vitae", "rutrum ad tincidunt consectetur; proin montes.", 
+      "Natoque mauris in; consequat fusce dui faucibus.", "Etiam suscipit posuere erat donec rhoncus", "scelerisque posuere.",
+    "Lorem ipsum odor amet, consectetuer adipiscing", "elit. Diam imperdiet ornare egestas a congue",
+      "congue curabitur sit. Risus laoreet nam quam", "ultricies quisque inceptos. Enim torquent vitae", "rutrum ad tincidunt consectetur; proin montes.", 
+      "Natoque mauris in; consequat fusce dui faucibus.", "Etiam suscipit posuere erat donec rhoncus", "scelerisque posuere."])
+    .enter()
+    .append("tspan")
+    .attr("x", 10)
+    .attr("dy", "12px")
+    .text(d => d);
 
 });
