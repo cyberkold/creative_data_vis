@@ -71,8 +71,12 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("font-size", "24px")
     .style("text-align", "center")
 
-  var popUpContent = popUp.append("div")
-    .style("font-size", "12px")
+  /*var popUpContent = popUp.append("div")
+    .style("font-size", "12px")*/
+
+  var popUpGraph = d3.select(".popUp")
+    .append("svg")
+    .attr("class", "graph")
 
   var closeButton = d3.select(".popUp").append("button")
     .style("position", "absolute")
@@ -91,8 +95,13 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
         .style("opacity", 0)
         .style("width", "0px")
         .style("height", "0px")
+      d3.select(".graph")
+        .attr("width", 0)
+        .attr("height", 0)
     })
 
+  var popUpWidth = "1000px";
+  var popUpHeight = "600px";
   //draw the map
   var countryPaths = svg.append("g")
     .selectAll("path")
@@ -135,16 +144,77 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
             .style("display", "block")
             .style("left", "19%")
             .style("top", "22%")
-            .style("height", "600px")
-            .style("width", "1000px")
+            .style("height", popUpHeight)
+            .style("width", popUpWidth)
+          popUpGraph.transition()
+            .attr("height", 400)
+            .attr("width", 800)
+            .attr("transform", "translate(50,140)");
+
+          var disCountryValues;
+          try {
+            var selectedCountryData = disasterData.find(row => row.Country === thisData.properties.name && row.Year === (document.getElementById("slider").value));
+            if (!selectedCountryData) {
+              throw new Error("No data found");
+            }
+            disCountryValues = [
+              { type: "Extreme temperature", value: parseFloat(selectedCountryData["Extreme temperature"]) || 0 },
+              { type: "Drought", value: parseInt(selectedCountryData.Drought) || 0 },
+              { type: "Flood", value: parseInt(selectedCountryData.Flood) || 0 },
+              { type: "Storm", value: parseInt(selectedCountryData.Storm) || 0 },
+              { type: "Landslide", value: parseInt(selectedCountryData.Landslide) || 0 },
+              { type: "Wildfire", value: parseInt(selectedCountryData.Wildfire) || 0 }
+            ];
+          } catch (error) {
+            console.log("Error: ", error.message);
+            disCountryValues = [
+              { type: "Extreme temperature", value: 0 },
+              { type: "Drought", value: 0 },
+              { type: "Flood", value: 0 },
+              { type: "Storm", value: 0 },
+              { type: "Landslide", value: 0 },
+              { type: "Wildfire", value: 0 }
+            ];
+          }
+          var maxValue = d3.max(disCountryValues, d => d.value);
+
+          var margin = { top: 20, right: 20, bottom: 50, left: 40 };
+
+          var xScale = d3.scaleBand()
+            .domain(disCountryValues.map(d => d.type))
+            .rangeRound([margin.left, 800 - margin.right])
+            .padding(0.1);
+
+          var xAxis = d3.axisBottom(xScale);
+
+          popUpGraph.append("g")
+            .attr("transform", `translate(10,${400 - margin.bottom})`)
+            .call(xAxis)
+            .selectAll("text")  
+              .style("text-anchor", "middle")
+              .attr("dx", "-.8em")
+              .attr("dy", ".90em")
+
+          var y = d3.scaleLinear()
+            .domain([0, maxValue])
+            .range([400 - margin.bottom, margin.top])
+
+          var yAxis = d3.axisLeft(y)
+            .ticks(5)
+
+          popUpGraph.append("g")
+            .attr("transform", `translate(${margin.left},-10)`)
+            .call(yAxis)
+
+          
+              
+
+
           popUpTitle.html(thisData.properties.name)
-          var temperature = getDisValues(thisData.properties.name, 'Extreme temperature')
-          var drought = getDisValues(thisData.properties.name, 'Drought')
-          var flood = getDisValues(thisData.properties.name, 'Flood')
-          var storm = getDisValues(thisData.properties.name, 'Storm')
-          var landslide = getDisValues(thisData.properties.name, 'Landslide')
-          var wildfire = getDisValues(thisData.properties.name, 'Wildfire')
-          popUpContent.html(`<br><br><br><u><strong style="font-size: 16px;">In${document.getElementById("slider").value}, ${thisData.properties.name} had</strong></u> <strong><br>Extreme temperatures:</strong> ${temperature}<br><strong>Storms:</strong> ${storm}<br><strong>Floods:</strong> ${flood}<br><strong>Drought:</strong> ${drought}<br><strong>Wildfires:</strong> ${wildfire}<br><strong>Landslides:</strong> ${landslide}`)
+          
+
+          /*
+          popUpContent.html(`<br><br><br><u><strong style="font-size: 16px;">In${document.getElementById("slider").value}, ${thisData.properties.name} had</strong></u> <strong><br>Extreme temperatures:</strong> ${temperature}<br><strong>Storms:</strong> ${storm}<br><strong>Floods:</strong> ${flood}<br><strong>Drought:</strong> ${drought}<br><strong>Wildfires:</strong> ${wildfire}<br><strong>Landslides:</strong> ${landslide}`)*/
         })
 
     //function to get column for specific country and year, and retrieve the value
