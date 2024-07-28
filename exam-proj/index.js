@@ -177,7 +177,6 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
               { type: "Wildfire", value: 0 }
             ];
           }
-          var maxValue = d3.max(disCountryValues, d => d.value);
 
           var margin = { top: 20, right: 20, bottom: 50, left: 40 };
 
@@ -218,7 +217,27 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
               .attr("y", d => y(d.value))
               .attr("width", xScale.bandwidth()-50)
               .attr("height", d => 500 - margin.bottom - y(d.value))
-              .attr("fill", "black"); // You can choose any fill color
+              .attr("fill", "black")
+              .on("mouseover", function(event, d) {
+                d3.select(this)
+                .transition()
+                .style("cursor", "pointer")
+                .attr("fill", "grey")
+              toolTip.transition()
+                .duration(100)
+                .style("opacity", 0.9)
+              toolTip.html(`${d.value}`)
+                .style("left", (xScale(d.type) + xScale.bandwidth() / 2 + 250) + "px") // Adjust +10 as needed
+                .style("top", (y(d.value) + 270) + "px")
+                .style("z-index", "20")
+                .style("width", "36px")
+              })
+              .on("mouseout", function() {
+              toolTip.transition()
+                .style("opacity", 0)
+              d3.select(this)
+                .attr("fill", "black")
+              })
 
           popUpTitle.html(thisData.properties.name)
           popUpContent.html(document.getElementById("slider").value)
