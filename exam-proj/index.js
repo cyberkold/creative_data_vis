@@ -313,14 +313,6 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
   var legend = svg.append("g")
     .attr("class", "legend")
 
-  legend.append("rect")
-    .attr("x", 0)
-    .attr("y", 420)
-    .attr("height", 300)
-    .attr("width", 220)
-    .style("fill", "white")
-    .style("opacity", 0.1)
-
   var defs = svg.append("defs")
   var linearGradient = defs.append("linearGradient")
       .attr("id", "linear-gradient")
@@ -339,32 +331,35 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .attr("stop-color", "brown")
 
   legend.append("rect")
-    .attr("width", 200)
+    .attr("width", 120)
     .attr("height", 20)
-    .attr("x", 10)
-    .attr("y", 440)
+    .attr("x", 54)
+    .attr("y", 400)
     .style("fill", "url(#linear-gradient)")
 
   legend.append("text")
-    .attr("x", 10)
-    .attr("y", 462)
+    .attr("x", 0)
+    .attr("y", 430)
     .style("font-size", 10)
     .style("font-style", "italic")
     .style("fill", "white")
+    .style("font-family", "India")
+    .attr("text-anchor", "middle")
     .selectAll("tspan")
-    .data(["The color of the countries denotes the number of", "natural disasters in total. If the country has a", 
+    .data(["The color of the countries denotes the number", "of natural disasters in total. If the country has a", 
       "black color, it had 0 disasters in total that year."])
     .enter()
     .append("tspan")
-    .attr("x", 10)
+    .attr("x", 110)
     .attr("dy", "12px")
     .text(d => d);
 
   legend.append("text")
     .attr("x", 10)
-    .attr("y", 510)
+    .attr("y", 500)
     .style("font-size", 10)
     .style("fill", "white")
+    .attr("text-anchor", "middle")
     .selectAll("tspan")
     .data(["Lorem ipsum odor amet, consectetuer adipiscing", "elit. Diam imperdiet ornare egestas a congue",
       "congue curabitur sit. Risus laoreet nam quam", "ultricies quisque inceptos. Enim torquent vitae", "rutrum ad tincidunt consectetur; proin montes.", 
@@ -374,7 +369,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
       "Natoque mauris in; consequat fusce dui faucibus.", "Etiam suscipit posuere erat donec rhoncus", "scelerisque posuere."])
     .enter()
     .append("tspan")
-    .attr("x", 10)
+    .attr("x", 110)
     .attr("dy", "12px")
     .text(d => d);
 
