@@ -1,5 +1,5 @@
 var width = 1200
-var height = 900
+var height = 800
 
 d3.select("body").style("background-color", "black");
 
@@ -15,7 +15,7 @@ var svg = d3.select("#vis")
 
 //viz title
 var vizTitle = svg.append("text")
-  .attr("y", 60)
+  .attr("y", 30)
   .attr("x", width/2-360)
   .style("display", "block")
   .style("margin", "auto")
@@ -25,7 +25,7 @@ var vizTitle = svg.append("text")
 
 //map
 var projection = d3.geoNaturalEarth1()
-  .scale(width/4.8)
+  .scale(width/5.2)
   .translate([width/2, height/2]);
 
 var path = d3.geoPath().projection(projection);
@@ -295,17 +295,19 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
   console.log(years)
 
   var sliderTextWidth = 54;
-  d3.select("#sliderText")
-    .style("font-size", "24px")
-    .style("color", "white")
-    .style("position", "absolute")
-    .style("top", height-90+"px")
-    .style("left", width/2+120+"px");
+    d3.select("#sliderText")
+      .style("font-size", "24px")
+      .style("color", "white")
+      .style("position", "fixed")
+      .style("top", "718px")
+      .style("left", "50%")
+      .style("transform", "translateX(-50%)");
 
   d3.select("#slider")
-    .style("position", "absolute")
-    .style("top", height-20+"px")
-    .style("left", width/2-140+"px")
+    .style("position", "fixed")
+    .style("top", "780px")
+    .style("left", "40%")
+    .style("transform", "translateX(-140px)")
     .style("z-index", "10")
     .attr("min", minYear)
     .attr("max", maxYear)
@@ -336,12 +338,12 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .attr("width", 120)
     .attr("height", 20)
     .attr("x", 54)
-    .attr("y", 400)
+    .attr("y", 376)
     .style("fill", "url(#linear-gradient)")
 
   legend.append("text")
     .attr("x", 0)
-    .attr("y", 430)
+    .attr("y", 406)
     .style("font-size", 10)
     .style("font-style", "italic")
     .style("fill", "white")
@@ -358,7 +360,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
 
   legend.append("text")
     .attr("x", 10)
-    .attr("y", 500)
+    .attr("y", 460)
     .style("font-size", 10)
     .style("fill", "white")
     .attr("text-anchor", "middle")
