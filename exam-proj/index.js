@@ -146,7 +146,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
             .style("opacity", 0.9)
             .style("display", "absolute")
             .style("left", "19%")
-            .style("top", "22%")
+            .style("top", "12%")
             .style("height", popUpHeight)
             .style("width", popUpWidth)
           popUpGraph.transition()
