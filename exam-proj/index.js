@@ -300,7 +300,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("color", "white")
     .style("position", "absolute")
     .style("top", height-90+"px")
-    .style("left", `calc(50% - ${sliderTextWidth / 2}px)`);
+    .style("left", width/2+120+"px");
 
   d3.select("#slider")
     .style("position", "absolute")
