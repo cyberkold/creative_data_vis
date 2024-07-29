@@ -99,6 +99,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
       d3.select(".graph")
         .attr("width", 0)
         .attr("height", 0)
+        
     })
 
   var popUpWidth = "1000px";
@@ -143,13 +144,13 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
           popUp.transition()
             .duration(100)
             .style("opacity", 0.9)
-            .style("display", "block")
+            .style("display", "absolute")
             .style("left", "19%")
             .style("top", "22%")
             .style("height", popUpHeight)
             .style("width", popUpWidth)
           popUpGraph.transition()
-            .attr("height", 800)
+            .attr("height", 560)
             .attr("width", 800)
             .attr("transform", "translate(50,30)");
 
