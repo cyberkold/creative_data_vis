@@ -237,8 +237,8 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
                 .duration(100)
                 .style("opacity", 0.9)
               toolTip.html(`${d.value}`)
-                .style("left", (xScale(d.type) + xScale.bandwidth() / 2 + 280) + "px") // Adjust +10 as needed
-                .style("top", (y(d.value) + 300) + "px")
+                .style("left", (xScale(d.type) + xScale.bandwidth() / 2 + 250) + "px") // Adjust +10 as needed
+                .style("top", (y(d.value) + 240) + "px")
                 .style("z-index", "20")
                 .style("width", "36px")
               })
