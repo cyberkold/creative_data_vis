@@ -75,6 +75,15 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("font-size", "14px")
     .style("text-align", "center")
 
+  var ylabel = popUp.append("div")
+    .style("font-size", "10px")
+    .text("Number of disasters")
+    .attr("fill", "black")
+    .style("z-index", "10")
+    .style("position", "absolute")
+    .style("top", "116px")
+    .style("left", "44px")
+
   var popUpGraph = d3.select(".popUp")
     .append("svg")
     .attr("class", "graph")
@@ -206,8 +215,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
           popUpGraph.append("g")
             .attr("transform", `translate(10,${500 - margin.bottom})`)
             .call(xAxis)
-            .selectAll("text")  
-              .style("text-anchor", "middle")
+            .append("text")
               .attr("dx", "-.8em")
               .attr("dy", ".90em")
           
