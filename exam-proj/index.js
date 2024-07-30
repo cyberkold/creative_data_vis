@@ -161,12 +161,6 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
   var popUp = d3.select("body").append("div")
     .attr("class", "popUp")
     .style("opacity", 0)
-    .style("position", "absolute")
-    .style("left", "40%")
-    .style("top", "50%")
-    .style("background-color", "white")
-    .style("border", "1px solid black")
-    .style("padding", "5px")
 
   var popUpTitle = popUp.append("div")
     .attr("class", "popUp-content")
@@ -174,6 +168,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("text-align", "center")
 
   var popUpContent = popUp.append("div")
+    .attr("class", "pcontent")
     .style("font-size", "14px")
     .style("text-align", "center")
 
@@ -210,6 +205,8 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
       d3.select(".graph")
         .attr("width", 0)
         .attr("height", 0)
+      popUpContent.html("h")
+        
         
     })
 
@@ -254,8 +251,11 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
           var thisData = d.target.__data__
           popUp.transition()
             .duration(100)
+            .style("background-color", "white")
+            .style("border", "1px solid black")
+            .style("padding", "5px")
             .style("opacity", 0.9)
-            .style("display", "absolute")
+            .style("position", "absolute")
             .style("left", "19%")
             .style("top", "12%")
             .style("height", popUpHeight)
@@ -339,8 +339,8 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
                 .duration(100)
                 .style("opacity", 0.9)
               toolTip.html(`${d.value}`)
-                .style("left", (xScale(d.type) + xScale.bandwidth() / 2 + 250) + "px")
-                .style("top", (y(d.value) + 240) + "px")
+                .style("left", (xScale(d.type) + xScale.bandwidth() / 2 + 280) + "px")
+                .style("top", (y(d.value) + 220) + "px")
                 .style("z-index", "20")
                 .style("width", "36px")
               })
