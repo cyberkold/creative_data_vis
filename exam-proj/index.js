@@ -237,7 +237,7 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
                 .duration(100)
                 .style("opacity", 0.9)
               toolTip.html(`${d.value}`)
-                .style("left", (xScale(d.type) + xScale.bandwidth() / 2 + 250) + "px") // Adjust +10 as needed
+                .style("left", (xScale(d.type) + xScale.bandwidth() / 2 + 250) + "px")
                 .style("top", (y(d.value) + 240) + "px")
                 .style("z-index", "20")
                 .style("width", "36px")
@@ -255,17 +255,6 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
           ornare egestas a congue. Lorem ipsum odor amet, consectetuer adipiscing, elit. Diam imperdiet ornare egestas a congue.`)
           
         })
-
-    //function to get column for specific country and year, and retrieve the value
-    /*function getDisValues(country, column) {
-      var filteredData = disasterData.filter(function(row) {
-        return row.Country === country && row.Year === (document.getElementById("slider").value);
-      }).map(function(row) {
-        return Math.floor(row[column]);
-      })
-        return filteredData.length > 0 ? filteredData[0] : 0;
-      }*/
-        
 
   //event listener for slider
   var slider = document.getElementById("slider");
