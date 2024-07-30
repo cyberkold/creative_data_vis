@@ -45,6 +45,26 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     }
   });
 
+  function mostDisasters() {
+    var totals = disasterData.reduce(function(acc, curRow) {
+      var year = curRow.Year;
+      var total = +curRow.Total;
+
+    if(acc[year]) {
+      acc[year] += total
+    } else {
+      acc[year] = total
+    }
+    return acc;
+    }, {})
+
+    var yearTotals = Object.entries(totals);
+    console.log(yearTotals)
+    var maxDisasters = d3.max(yearTotals, d => d[1]);
+    var maxYear = yearTotals.find(entry => entry[1] === maxDisasters)[0];
+    return maxYear;
+  }
+
   var toolTip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0)
@@ -55,6 +75,42 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("height", "20px")
     .style("width", "120px")
     .style("text-align", "center")
+
+  var mostButton = d3.select("body").append("button")
+    .attr("class", "mostButton")
+    .style("position", "absolute")
+    .style("top", "40px")
+    .style("left", "1330px")
+    .style("width", "154px")
+    .style("height", "22px")
+    .text("Year with most disasters")
+    .style("text-align", "center")
+    .style("padding", "0")
+    .style("font-size", "10px")
+    .style("cursor", "pointer")
+    .style("z-index", "100")
+    .style("background-color", "#FCFCFD")
+    .style("border-radius", "4px")
+    .style("box-shadow", "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset")
+    .style("font-family", "monospace")
+    .style("transition", "box-shadow .15s,transform .15s")
+    .on("mouseover", function(event, d) {
+      d3.select(".mostButton")
+      .transition()
+      .style("background-color", "grey")
+    })
+    .on("mouseout", function(event, d) {
+      d3.select(".mostButton")
+      .transition()
+      .style("background-color", "#FCFCFD")
+    })
+    .on("click", function(event, d) {
+      var md = mostDisasters()
+      var slider = document.getElementById("slider");
+      slider.value=md;
+      var event = new Event("input");
+      slider.dispatchEvent(event);
+    })
 
   var popUp = d3.select("body").append("div")
     .attr("class", "popUp")
