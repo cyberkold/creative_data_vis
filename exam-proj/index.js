@@ -465,16 +465,23 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .style("fill", "white")
     .attr("text-anchor", "middle")
     .selectAll("tspan")
-    .data(["Lorem ipsum odor amet, consectetuer adipiscing", "elit. Diam imperdiet ornare egestas a congue",
-      "congue curabitur sit. Risus laoreet nam quam", "ultricies quisque inceptos. Enim torquent vitae", "rutrum ad tincidunt consectetur; proin montes.", 
-      "Natoque mauris in; consequat fusce dui faucibus.", "Etiam suscipit posuere erat donec rhoncus", "scelerisque posuere.",
-    "Lorem ipsum odor amet, consectetuer adipiscing", "elit. Diam imperdiet ornare egestas a congue",
-      "congue curabitur sit. Risus laoreet nam quam", "ultricies quisque inceptos. Enim torquent vitae", "rutrum ad tincidunt consectetur; proin montes.", 
-      "Natoque mauris in; consequat fusce dui faucibus.", "Etiam suscipit posuere erat donec rhoncus", "scelerisque posuere."])
+    .data(["'Nature's Fury: 43 Years of Global Disasters", "(1980-2023)' is a visualization project that",
+      "investigates the evolution of natural disasters", "over the years, from 1980 to 2023.", "It examines which countries have been impacted,", 
+      "the extent of their impact, and the various", "types of disasters they have faced.", "The visualization includes six different types of",
+      "disasters; drought, extreme temperature,", "flood, landslide, storm and wildfire.", " ",
+      "The disasters covered in the visualization", "are disasters that:", " ", "i. Killed 10 or more people", 
+      "ii. Affected 100 or more people", "iii. Led to declaration of a state of emergency", "iv. Led to call of international assistance"])
     .enter()
     .append("tspan")
     .attr("x", 110)
     .attr("dy", "12px")
     .text(d => d);
+
+    var st = ""
+    var st2 = ""
+    var st3 = ""
+    var st4 = ""
+    var st5 = ""
+    var st6 = ""
 
 });
