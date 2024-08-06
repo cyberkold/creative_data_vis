@@ -477,11 +477,16 @@ var dis_data = d3.csv("climate-dis-total.csv").then(function(disasterData) {
     .attr("dy", "12px")
     .text(d => d);
 
-    var st = ""
-    var st2 = ""
-    var st3 = ""
-    var st4 = ""
-    var st5 = ""
-    var st6 = ""
+    legend.append("a")
+      .attr("xlink:href", "https://climatedata.imf.org/datasets/b13b69ee0dde43a99c811f592af4e821/explore")
+      .attr("target", "_blank")
+      .append("text")
+      .attr("x", 110)
+      .attr("y", 700)
+      .style("font-size", "10px")
+      .style("fill", "white")
+      .style("text-decoration-line", "underline")
+      .attr("text-anchor", "middle")
+      .text("Data source");
 
 });
